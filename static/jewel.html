@@ -1,0 +1,15 @@
+<!doctype html>
+<html ng-app="jewel">
+<head>
+<title>Jewel</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.js"></script>
+<script src="jewel.js"></script>
+</head>
+<body>
+
+<div ng-controller="userLog">
+<img ng-show="recordLog.isLoadingLog()" src="img/spinner.gif" alt="loading spinner" />
+{{ recordLog.getRecordData()}}
+</div>
+</body>
+</html>
