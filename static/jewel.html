@@ -3,11 +3,13 @@
 <head>
 <title>Jewel</title>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.js"></script>
-<script src="jewel.js"></script>
+<script src="app.js"></script>
+<script src="userlogctrl.js"></script>
+<script src="recordlog.js"></script>
 </head>
 <body>
 
-<div ng-controller="userLog">
+<div ng-controller="UserLogCtrl">
 <img ng-show="recordLog.isLoadingLog()" src="img/spinner.gif" alt="loading spinner" />
 {{ recordLog.getRecordData()}}
 </div>
