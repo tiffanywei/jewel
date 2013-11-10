@@ -8,7 +8,7 @@ describe('controller', function() {
   beforeEach(inject(function($controller, $rootScope, $httpBackend, $http) {
     scope = $rootScope.$new();
     httpBackend = $httpBackend;
-    httpBackend.when("GET", "/").respond([]);
+    httpBackend.when("GET", "/test_records.json").respond([]);
     recordLogSpy = jasmine.createSpyObj('recordLogSpy', ['onDataLoaded']);
 
     ctrl = $controller('UserLogCtrl', {

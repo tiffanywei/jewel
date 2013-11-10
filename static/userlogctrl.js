@@ -1,7 +1,7 @@
 jewel.controller('UserLogCtrl', ['$scope', '$http', 'recordLog',
     function UserLogCtrl($scope, $http, recordLog) {
       $scope.recordLog = recordLog;
-      $http.get('/').success(function(data) {
+      $http.get('/test_records.json').success(function(data) {
         recordLog.onDataLoaded(data);
       });
     }]);
