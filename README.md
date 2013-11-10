@@ -24,3 +24,6 @@ To view heroku logs:
 
 To run tests:
   scripts/run_tests.sh
+
+To start the local redis server:
+  redis-server

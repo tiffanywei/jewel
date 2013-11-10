@@ -1,8 +1,13 @@
 from flask import Flask, redirect, url_for
 import json
 import os
+import redis
 import time
 
+
+def get_redis():
+  redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
+  return redis.from_url(redis_url)
 
 app = Flask(__name__)
 
@@ -21,7 +26,7 @@ def test_records():
   # TODO: Remove sleep.
   time.sleep(1)
 
-  return json.dumps([{
+  records = [{
     Column.PERSON: 'vlad',
     Column.AMOUNT: 50,
     Column.TIMESTAMP: _now(),
@@ -36,7 +41,10 @@ def test_records():
     Column.AMOUNT: -50,
     Column.TIMESTAMP: _now(),
     Column.MEMO: 'food'}
-    ])
+    ]
+  return records
+
+
 
 def _now():
   return time.time();
