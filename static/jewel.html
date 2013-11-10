@@ -11,7 +11,14 @@
 
 <div ng-controller="UserLogCtrl">
 <img ng-show="recordLog.isLoadingLog()" src="img/spinner.gif" alt="loading spinner" />
-{{ recordLog.getRecordData()}}
+<table>
+  <tr ng-repeat="record in recordLog.getRecordData()">
+    <td> {{record.timestamp}} </td>
+    <td> {{record.person}} </td>
+    <td> {{record.amount}} </td>
+    <td> {{record.memo}} </td>
+  </tr>
+</table>
 </div>
 </body>
 </html>
