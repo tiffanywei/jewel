@@ -42,7 +42,7 @@ def test_records():
     Column.TIMESTAMP: _now(),
     Column.MEMO: 'food'}
     ]
-  return records
+  return json.dumps(records)
 
 
 
