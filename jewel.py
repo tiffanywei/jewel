@@ -1,13 +1,7 @@
 from flask import Flask, redirect, url_for
 import json
-import os
-import redis
 import time
 
-
-def get_redis():
-  redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
-  return redis.from_url(redis_url)
 
 app = Flask(__name__)
 
@@ -47,4 +41,4 @@ def test_records():
 
 
 def _now():
-  return time.time();
+  return time.time()
