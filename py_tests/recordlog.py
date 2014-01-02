@@ -1,8 +1,18 @@
+import json
+import unittest
 from models.recordlog import RecordLog
+from fakeredis import FakeRedis
 
-rl = RecordLog('debtor', 'creditor', 1337, '"services"')
-print rl.to_json()
-rl.store()
+class TestRecordLog(unittest.TestCase):
+  def setUp(self):
+    self.fake_redis = FakeRedis()
+    
+  def test_to_json(self):
+    rl = RecordLog('my debtor', 'my creditor', 1337, '"services"', None, self.fake_redis)
+    from_json = json.loads(rl.to_json())
+    self.assertEqual('my debtor', from_json['debtor'])
 
-up = rl.get_user_pair()
-print up.get_record_logs()
+  def test_store(self):
+    rl = RecordLog('my debtor', 'my creditor', 1337, '"services"', None, self.fake_redis)
+    rl.store()
+    self.assertEqual(rl.to_json(), self.fake_redis.state['RecordLog:1']) 

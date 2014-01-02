@@ -19,12 +19,12 @@ class RecordLog(object):
   """
 
   @staticmethod
-  def _new_key():
-    next_key = get_redis().incr('RecordLogCount')
+  def _new_key(redis_client):
+    next_key = redis_client.incr('RecordLogCount')
     return 'RecordLog:%s' % next_key
 
-  def __init__(self, debtor_key, creditor_key, amount, memo=None, timestamp=None):
-    self._redis = get_redis()
+  def __init__(self, debtor_key, creditor_key, amount, memo=None, timestamp=None, redis_client=None):
+    self._redis = get_redis() if redis_client is None else redis_client
 
     self.debtor_key = debtor_key
     self.creditor_key = creditor_key
@@ -33,7 +33,7 @@ class RecordLog(object):
     self.timestamp = timestamp or time.time()
 
   def store(self):
-    key = RecordLog._new_key()
+    key = RecordLog._new_key(self._redis)
     self._redis.set(key, self.to_json())
     self.get_user_pair().add(key, self.timestamp)
     # TODO: Add to sorted sets for "all" tabs for both users.
@@ -48,4 +48,4 @@ class RecordLog(object):
     })
 
   def get_user_pair(self):
-    return UserPair(self.debtor_key, self.creditor_key)
+    return UserPair(self.debtor_key, self.creditor_key, self._redis)
