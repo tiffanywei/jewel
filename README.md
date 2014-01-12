@@ -22,8 +22,11 @@ To run python shell:
 To view heroku logs:
   heroku logs
 
-To run tests:
+To run javascript tests:
   scripts/run_tests.sh
+
+To run python tests:
+  python py_tests/runner.py
 
 To start the local redis server:
   redis-server
