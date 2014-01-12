@@ -16,7 +16,7 @@ module.exports = function(config) {
     files: [
       'static/3rd-party/angular-1.0.8/angular.js',
       'static/**/*.js',
-      'test/**/*.js'
+      'js_test/**/*.js'
     ],
 
 
