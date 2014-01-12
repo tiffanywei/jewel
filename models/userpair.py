@@ -10,7 +10,7 @@ class UserPair(object):
     self.userpair_key = UserPair.make_key(debtor_key, creditor_key)
 
   def add(self, recordlog_key, timestamp):
-    self._redis.zadd(self.userpair_key, recordlog_key, timestamp)
+    self._redis.zadd(self.userpair_key, timestamp, recordlog_key)
 
   def get_record_logs(self, start=0, stop=10):
     return self._redis.zrange(self.userpair_key, start, stop)

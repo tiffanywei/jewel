@@ -7,6 +7,7 @@ sys.path.append(app_root_path)
 
 # import test files here.
 from recordlog import TestRecordLog
+from userpair import TestUserPair
 
 if __name__ == '__main__':
     unittest.main()
