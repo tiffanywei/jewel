@@ -7,13 +7,13 @@ class TestUserPair(unittest.TestCase):
     self.fake_redis = FakeRedis()
 
   def test_add(self):
-    up = UserPair('vlad', 'tiffy', self.fake_redis)
+    up = UserPair(3, 4, self.fake_redis)
     up.add('RecordLog:1', 0)
-    self.assertTrue('UserPair:tiffy:vlad' in self.fake_redis.state)
-    self.assertTrue('0___RecordLog:1' in self.fake_redis.state['UserPair:tiffy:vlad'])
+    self.assertTrue('UserPair:3:4' in self.fake_redis.state)
+    self.assertTrue('0___RecordLog:1' in self.fake_redis.state['UserPair:3:4'])
 
   def test_get_record_logs(self):
-    up = UserPair('vlad', 'tiffy', self.fake_redis)
+    up = UserPair(5, 6, self.fake_redis)
     up.add('RecordLog:3', 2)
     up.add('RecordLog:1', 0)
     up.add('RecordLog:2', 1)

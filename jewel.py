@@ -38,7 +38,21 @@ def test_records():
     ]
   return json.dumps(records)
 
+@app.route('/tab/all')
+def all_records_for_user():
+  # TODO: Retrieve all RecordLogs for user. See recordlog.py.
+  return json.dumps([])
+
+
+@app.route('/tab/<int:other_user_id>')
+def records_with(other_user_id):
+  # TODO: Use actual other_user_id + User class.
+
 
 
 def _now():
   return time.time()
+
+# TODO: Actually get the currently logged in user.
+def _get_current_user_id():
+  return 3

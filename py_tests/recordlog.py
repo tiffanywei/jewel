@@ -8,11 +8,12 @@ class TestRecordLog(unittest.TestCase):
     self.fake_redis = FakeRedis()
     
   def test_to_json(self):
-    rl = RecordLog('my debtor', 'my creditor', 1337, '"services"', None, self.fake_redis)
+    rl = RecordLog(2, 3, 1337, '"services"', None, self.fake_redis)
     from_json = json.loads(rl.to_json())
-    self.assertEqual('my debtor', from_json['debtor'])
+    self.assertEqual(2, from_json['debtor'])
+    self.assertEqual(3, from_json['creditor'])
 
   def test_store(self):
-    rl = RecordLog('my debtor', 'my creditor', 1337, '"services"', None, self.fake_redis)
+    rl = RecordLog(4, 5, 1337, '"services"', None, self.fake_redis)
     rl.store()
     self.assertEqual(rl.to_json(), self.fake_redis.state['RecordLog:1']) 
