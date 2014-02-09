@@ -13,10 +13,10 @@
 <img ng-show="recordLog.isLoadingLog()" src="img/spinner.gif" alt="loading spinner" />
 <table>
   <tr ng-repeat="record in recordLog.getRecordData()">
-    <td> {{record.timestamp}} </td>
-    <td> {{record.person}} </td>
-    <td> {{record.amount}} </td>
-    <td> {{record.memo}} </td>
+    <td> {{ record.timestamp * 1000 | date: 'MM/dd/yyyy' }} </td>
+    <td> {{ record.person }} </td>
+    <td> {{ record.amount }} </td>
+    <td> {{ record.memo }} </td>
   </tr>
 </table>
 </div>
