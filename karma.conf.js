@@ -15,7 +15,15 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'static/3rd-party/angular-1.0.8/angular.js',
-      'static/**/*.js',
+
+      // These must be the same order that scripts are loaded in jewel.html.
+      // TODO: Use module loader like requirejs to avoid duplication.
+      'static/userpairlog.js',
+      'static/recordlogtab.js',
+      'static/app.js',
+      'static/userlogctrl.js',
+
+      'static/3rd-party/angular-1.0.8/angular-mocks.js',
       'js_test/**/*.js'
     ],
 

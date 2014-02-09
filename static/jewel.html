@@ -3,22 +3,38 @@
 <head>
 <title>Jewel</title>
 <script src="3rd-party/angular-1.0.8/angular.js"></script>
+<script src="userpairlog.js"></script>
+<script src="recordlogtab.js"></script>
 <script src="app.js"></script>
 <script src="userlogctrl.js"></script>
-<script src="recordlog.js"></script>
 </head>
 <body>
 
 <div ng-controller="UserLogCtrl">
-<img ng-show="recordLog.isLoadingLog()" src="img/spinner.gif" alt="loading spinner" />
+<img alt="loading spinner" 
+    ng-show="recordLogTab.isLoadingLog()" src="img/spinner.gif" />
+
 <table>
-  <tr ng-repeat="record in recordLog.getRecordData()">
+  <thead>
+  <tr>
+    <th>Date</th>
+    <th>Amount</th>
+    <th>Memo</th>
+    <th ng-show="recordLogTab.isAllTab()">Person</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr ng-repeat="record in recordLogTab.getRecordData()">
     <td> {{ record.timestamp * 1000 | date: 'MM/dd/yyyy' }} </td>
-    <td> {{ record.person }} </td>
     <td> {{ record.amount }} </td>
     <td> {{ record.memo }} </td>
+    <td ng-show="recordLogTab.isAllTab()"> {{ record.person }} </td>
   </tr>
+  </tbody>
 </table>
+
 </div>
+
 </body>
 </html>

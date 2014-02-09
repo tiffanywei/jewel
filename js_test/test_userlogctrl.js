@@ -1,26 +1,21 @@
 describe('controller', function() {
   var scope;
-  var recordLogSpy;
+  var recordLogTabSpy;
   var httpBackend;
 
   beforeEach(module('jewel'));
 
-  beforeEach(inject(function($controller, $rootScope, $httpBackend, $http) {
+  beforeEach(inject(function($controller, $rootScope) {
     scope = $rootScope.$new();
-    httpBackend = $httpBackend;
-    httpBackend.when("GET", "/test_records.json").respond([]);
-    recordLogSpy = jasmine.createSpyObj('recordLogSpy', ['onDataLoaded']);
+    recordLogTabSpy = jasmine.createSpyObj('recordLogTabSpy', ['fetch']);
 
     ctrl = $controller('UserLogCtrl', {
       $scope: scope,
-      $http: $http,
-      recordLog: recordLogSpy
+      recordLogTab: recordLogTabSpy
     });
   }));
   
-  it('should call recordLog.onDataLoaded on XHR success', function() {
-    expect(recordLogSpy.onDataLoaded).not.toHaveBeenCalled();
-    httpBackend.flush();
-    expect(recordLogSpy.onDataLoaded).toHaveBeenCalled();
+  it('should call recordLogTab.fetch()', function() {
+    expect(recordLogTabSpy.fetch).toHaveBeenCalled();
   });
 });
