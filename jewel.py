@@ -47,8 +47,7 @@ def all_records_for_user():
 @app.route('/tab/<int:other_user_id>')
 def records_with(other_user_id):
   # TODO: Use actual other_user_id + User class.
-
-
+  pass
 
 def _now():
   return time.time()
