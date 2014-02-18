@@ -1,6 +1,9 @@
 from redis_client import get_redis
 
 class UserPair(object):
+  """
+  Read and modify RecordLogs associated with a given pair of users.
+  """
   @staticmethod
   def make_key(debtor_key, creditor_key):
     return 'UserPair:%s:%s' % tuple(
@@ -13,7 +16,7 @@ class UserPair(object):
     self._redis = get_redis() if redis_client is None else redis_client
     self.userpair_key = UserPair.make_key(debtor_key, creditor_key)
 
-  def add(self, recordlog_key, timestamp):
+  def add_record_log(self, recordlog_key, timestamp):
     self._redis.zadd(self.userpair_key, timestamp, recordlog_key)
 
   def get_record_logs(self, start=0, stop=10):

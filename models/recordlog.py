@@ -9,7 +9,7 @@ class RecordLog(object):
   key is randomly generated UUID
   value is a json string
   
-  <recordlog_key>: {
+  <record_log_key>: {
     creditor: <user_key>,
     debtor: <user_key>,
     timestamp: <int>
@@ -35,7 +35,7 @@ class RecordLog(object):
   def store(self):
     key = RecordLog._new_key(self._redis)
     self._redis.set(key, self.to_json())
-    self.get_user_pair().add(key, self.timestamp)
+    self.get_user_pair().add_record_log(key, self.timestamp)
     # TODO: Add to sorted sets for "all" tabs for both users.
 
   def to_json(self):
