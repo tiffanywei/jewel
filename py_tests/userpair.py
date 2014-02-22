@@ -6,6 +6,9 @@ class TestUserPair(unittest.TestCase):
   def setUp(self):
     self.test_redis = redis_client_for_testing.get_test_redis_client()
 
+  def tearDown(self):
+    self.test_redis.flushdb()
+    
   def assertSortedSetContainsAll(self, key, expected_elements):
     elements = self.test_redis.zrange(key, 0, -1)
     self.assertEquals(expected_elements, elements)
