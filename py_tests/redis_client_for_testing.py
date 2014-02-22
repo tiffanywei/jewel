@@ -16,7 +16,7 @@ def _start_test_redis_server():
       '--port', str(TEST_REDIS_PORT),
       '--daemonize', 'yes',
       # Don't persist data to disk for testing.
-      '--save', '',
+      '--save', '""',
       # Probably don't need this because of save "", but we don't want to risk overwriting dump.rdb.
       '--dbfilename', TEST_RDB_FILE,
   ])

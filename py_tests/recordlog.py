@@ -6,6 +6,9 @@ import redis_client_for_testing
 class TestRecordLog(unittest.TestCase):
   def setUp(self):
     self.test_redis = redis_client_for_testing.get_test_redis_client()
+
+  def tearDown(self):
+    self.test_redis.shutdown()
     
   def test_to_json(self):
     rl = RecordLog(2, 3, 1337, '"services"', None, self.test_redis)
