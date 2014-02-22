@@ -21,3 +21,9 @@ class UserPair(object):
 
   def get_record_logs(self, start=0, stop=10):
     return self._redis.zrange(self.userpair_key, start, stop)
+
+  def __eq__(self, other):
+    return self.userpair_key == other.userpair_key
+
+  def __ne__(self, other):
+    return not self.__eq__(other)
