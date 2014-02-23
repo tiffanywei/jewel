@@ -1,4 +1,5 @@
 import time
+from redis_client import get_redis
 from models.userpair import UserPair
 
 class UserPairsForUser(object):
@@ -7,16 +8,18 @@ class UserPairsForUser(object):
   """
 
   def _make_key(self):
-    return 'PrimaryUser:' + self._primary_user
+    return 'PrimaryUser:%s' % self._primary_user
 
   def __init__(self, primary_user, redis_client=None):
     self._redis = get_redis() if redis_client is None else redis_client
     self._primary_user = primary_user
     self._user_pairs_for_user_key = self._make_key()
 
-  def add_secondary_user(self, secondary_user, timestamp=None):
-    timestamp = timestamp or time.time()
-    self._redis.zadd(self._user_pairs_for_user_key, timestamp, secondary_user)
+  def add_secondary_user(self, secondary_user):
+    """
+    Current timestamp is used as the score for the sorted set. This orders our user pairs by most recently updated.
+    """
+    self._redis.zadd(self._user_pairs_for_user_key, time.time(), secondary_user)
 
   def get_user_pairs(self):
     secondary_users = self._redis.zrange(self._user_pairs_for_user_key, 0, -1)

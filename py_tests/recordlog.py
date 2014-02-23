@@ -20,3 +20,4 @@ class TestRecordLog(unittest.TestCase):
     rl = RecordLog(4, 5, 1337, '"services"', None, self.test_redis)
     rl.store()
     self.assertEqual(rl.to_json(), self.test_redis.get('RecordLog:1'))
+    # TODO Verify that _link_user_pair stuff happened.

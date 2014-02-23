@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, request
 import json
 import time
 
@@ -49,9 +49,30 @@ def records_with(other_user_id):
   # TODO: Use actual other_user_id + User class.
   pass
 
+@app.route('/create_record', methods=['POST'])
+def create_record():
+  # TODO: validate form.
+  RECORD_FIELDS = ['transaction_type', 'secondary_user', 'amount', 'memo']
+  record = {}
+  for field in RECORD_FIELDS:
+    record[field] = request.form[field]
+
+  # TODO: Use real time from form.
+
+  record['primary_user'] = _get_current_user_id()
+
+  _build_path_to_record_log(record)
+
+def _build_path_to_record_log(record):
+  # TODO: Find/create user.
+
+  transaction = Transaction(record['transaction_type'], record['primary_user'], record['secondary_user'])
+  rl = RecordLog(transaction.get_debtor(), transaction.get_creditor(), record['amount'], record['memo'])
+  rl.store()
+
 def _now():
   return time.time()
 
 # TODO: Actually get the currently logged in user.
 def _get_current_user_id():
-  return 3
+  return '3'

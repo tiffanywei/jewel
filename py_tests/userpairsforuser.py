@@ -15,7 +15,7 @@ class TestUserPairsForUser(unittest.TestCase):
     SECONDARY = 'secondary vlad'
 
     upfu = UserPairsForUser(PRIMARY, self.test_redis)
-    upfu.add_secondary_user(SECONDARY, 0)
+    upfu.add_secondary_user(SECONDARY)
     secondary_user = self.test_redis.zrange('PrimaryUser:%s' % PRIMARY, 0, -1)[0]
     self.assertEquals(SECONDARY, secondary_user)
 
