@@ -22,7 +22,7 @@ class UserPair(object):
   def redis_add_record_log(self, recordlog_key, timestamp):
     self._redis.zadd(self.userpair_key, timestamp, recordlog_key)
 
-  def redis_get_record_logs(self, start=0, stop=10):
+  def redis_get_record_log_keys(self, start=0, stop=10):
     return self._redis.zrange(self.userpair_key, start, stop)
 
   def __eq__(self, other):

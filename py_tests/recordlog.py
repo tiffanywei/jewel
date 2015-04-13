@@ -16,8 +16,8 @@ class TestRecordLog(unittest.TestCase):
     self.assertEqual(2, from_json['debtor'])
     self.assertEqual(3, from_json['creditor'])
 
-  def test_store(self):
+  def test_redis_store(self):
     rl = RecordLog(4, 5, 1337, '"services"', None, self.test_redis)
-    rl.store()
+    rl.redis_store()
     self.assertEqual(rl.to_json(), self.test_redis.get('RecordLog:1'))
     # TODO Verify that _link_user_pair stuff happened.

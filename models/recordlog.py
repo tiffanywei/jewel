@@ -27,6 +27,13 @@ class RecordLog(object):
     next_key = redis_client.incr('RecordLogCount')
     return 'RecordLog:%s' % next_key
 
+  @staticmethod
+  def redis_fetch_record_log(record_log_key, redis_client=None):
+    redis = get_redis() if redis_client is None else redis_client
+    rl_json = redis.get(record_log_key)
+    rl_dict = json.loads(rl_json)
+    return RecordLog(rl_dict['debtor'], rl_dict['creditor'], rl_dict['amount'], rl_dict['memo'])
+
   def __init__(self, debtor_key, creditor_key, amount, memo=None, timestamp=None, redis_client=None):
     self._redis = get_redis() if redis_client is None else redis_client
 
@@ -36,7 +43,7 @@ class RecordLog(object):
     self.memo = memo or ''
     self.timestamp = timestamp or time.time()
 
-  def store(self):
+  def redis_store(self):
     """
     Associate this RecordLog to a UserPair and store it in redis.
     """
@@ -63,3 +70,6 @@ class RecordLog(object):
     upfu2 = UserPairsForUser(self.debtor_key, self._redis)
     upfu1.redis_add_secondary_user(self.debtor_key)
     upfu2.redis_add_secondary_user(self.creditor_key)
+
+  def __repr__(self):
+    return self.to_json()

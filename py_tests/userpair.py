@@ -16,17 +16,17 @@ class TestUserPair(unittest.TestCase):
   def test_add_record_log(self):
     up = UserPair(3, 4, self.test_redis)
     record_log_key = 'RecordLog:1'
-    up.add_record_log(record_log_key, 0)
+    up.redis_add_record_log(record_log_key, 0)
     self.assertSortedSetContainsAll(up.userpair_key, [record_log_key])
 
-  def test_get_record_logs(self):
+  def test_get_record_log_keys(self):
     up = UserPair(5, 6, self.test_redis)
-    up.add_record_log('RecordLog:3', 2)
-    up.add_record_log('RecordLog:1', 0)
-    up.add_record_log('RecordLog:2', 1)
-    record_logs = up.get_record_logs( 0, 3)
+    up.redis_add_record_log('RecordLog:3', 2)
+    up.redis_add_record_log('RecordLog:1', 0)
+    up.redis_add_record_log('RecordLog:2', 1)
+    record_logs = up.redis_get_record_log_keys( 0, 3)
     self.assertEquals(['RecordLog:1', 'RecordLog:2', 'RecordLog:3'], record_logs)
-    record_logs = up.get_record_logs(0)
+    record_logs = up.redis_get_record_log_keys(0)
     self.assertEquals(['RecordLog:1', 'RecordLog:2', 'RecordLog:3'], record_logs)
-    record_logs = up.get_record_logs()
+    record_logs = up.redis_get_record_log_keys()
     self.assertEquals(['RecordLog:1', 'RecordLog:2', 'RecordLog:3'], record_logs)

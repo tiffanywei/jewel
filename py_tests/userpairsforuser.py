@@ -10,25 +10,25 @@ class TestUserPairsForUser(unittest.TestCase):
   def tearDown(self):
     self.test_redis.flushdb()
     
-  def test_add_secondary_user(self):
+  def test_redis_add_secondary_user(self):
     PRIMARY = 'primary tiffany'
     SECONDARY = 'secondary vlad'
 
     upfu = UserPairsForUser(PRIMARY, self.test_redis)
-    upfu.add_secondary_user(SECONDARY)
+    upfu.redis_add_secondary_user(SECONDARY)
     secondary_user = self.test_redis.zrange('PrimaryUser:%s' % PRIMARY, 0, -1)[0]
     self.assertEquals(SECONDARY, secondary_user)
 
-  def test_get_user_pairs(self):
+  def test_redis_get_user_pairs(self):
     PRIMARY = 'primary godzilla'
     SECONDARY = 'secondary husky'
     SECONDARY1 = 'secondary little husky'
 
     upfu = UserPairsForUser(PRIMARY, self.test_redis)
-    upfu.add_secondary_user(SECONDARY)
-    upfu.add_secondary_user(SECONDARY1)
+    upfu.redis_add_secondary_user(SECONDARY)
+    upfu.redis_add_secondary_user(SECONDARY1)
     EXPECTED_USER_PAIRS = {
       SECONDARY: UserPair(PRIMARY, SECONDARY, self.test_redis),
       SECONDARY1: UserPair(PRIMARY, SECONDARY1, self.test_redis),
     }
-    self.assertEquals(EXPECTED_USER_PAIRS, upfu.get_user_pairs())
+    self.assertEquals(EXPECTED_USER_PAIRS, upfu.redis_get_user_pairs())

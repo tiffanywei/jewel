@@ -41,6 +41,7 @@ def test_records():
 @app.route('/tab/all')
 def all_records_for_user():
   # TODO: Retrieve all RecordLogs for user. See recordlog.py.
+
   return json.dumps([])
 
 
@@ -68,7 +69,7 @@ def _build_path_to_record_log(record):
 
   transaction = Transaction(record['transaction_type'], record['primary_user'], record['secondary_user'])
   rl = RecordLog(transaction.get_debtor(), transaction.get_creditor(), record['amount'], record['memo'])
-  rl.store()
+  rl.redis_store()
 
 def _now():
   return time.time()
