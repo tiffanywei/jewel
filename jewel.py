@@ -2,8 +2,12 @@ from flask import Flask, redirect, url_for, request
 import json
 import time
 
+from models.recordlog import RecordLog
+from models.userpair import UserPair
+from models.userpairsforuser import UserPairsForUser
 
 app = Flask(__name__)
+app.debug = True
 
 class Column:
   PERSON = 'person'
@@ -40,9 +44,14 @@ def test_records():
 
 @app.route('/tab/all')
 def all_records_for_user():
-  # TODO: Retrieve all RecordLogs for user. See recordlog.py.
-
-  return json.dumps([])
+  current_user = _get_current_user_id()
+  upfu = UserPairsForUser(current_user)
+  # TODO: paginate record logs.
+  record_log_keys = []
+  for user_pair in upfu.redis_get_user_pairs().values():
+    record_log_keys.extend(user_pair.redis_get_record_log_keys())
+  record_logs = [RecordLog.redis_fetch_record_log(rl_key).to_json() for rl_key in record_log_keys]
+  return "[%s]" % ','.join(record_logs)
 
 
 @app.route('/tab/<int:other_user_id>')
@@ -76,4 +85,5 @@ def _now():
 
 # TODO: Actually get the currently logged in user.
 def _get_current_user_id():
-  return '3'
+  # see generate_seeed_data.py
+  return 'Best Husk'

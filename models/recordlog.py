@@ -72,4 +72,4 @@ class RecordLog(object):
     upfu2.redis_add_secondary_user(self.creditor_key)
 
   def __repr__(self):
-    return self.to_json()
+    return "RecordLog< %s >" % self.to_json()
