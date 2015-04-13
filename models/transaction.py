@@ -1,4 +1,8 @@
 class Transaction(object):
+  """
+  Given a primary user and a transaction type compute the debtor and creditor
+  of the transaction.
+  """
   class Type:
     BORROWED = 'borrowed'
     LENT = 'lent'

@@ -43,7 +43,7 @@ class RecordLog(object):
     key = RecordLog._new_key(self._redis)
     self._redis.set(key, self.to_json())
     user_pair = self.get_user_pair()
-    user_pair.add_record_log(key, self.timestamp)
+    user_pair.redis_add_record_log(key, self.timestamp)
     self._link_user_pair()
 
   def to_json(self):
@@ -61,5 +61,5 @@ class RecordLog(object):
   def _link_user_pair(self):
     upfu1 = UserPairsForUser(self.creditor_key, self._redis)
     upfu2 = UserPairsForUser(self.debtor_key, self._redis)
-    upfu1.add_secondary_user(self.debtor_key)
-    upfu2.add_secondary_user(self.creditor_key)
+    upfu1.redis_add_secondary_user(self.debtor_key)
+    upfu2.redis_add_secondary_user(self.creditor_key)
