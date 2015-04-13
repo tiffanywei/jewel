@@ -14,7 +14,7 @@ To enter virtualenv before running anything:
  source venv/bin/activate
 
 To run local server:
-  formeman start
+  foreman start
 
 To run python shell:
   heroku run python
